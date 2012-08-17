@@ -1,0 +1,12 @@
+import site
+# Fix this with your path, also keep an eye on the python version
+site.addsitedir('/srv/www/<hostname>/VIRTUALENV/lib/python2.6/site-packages/')
+site.addsitedir('/srv/www/<hostname>/')
+
+import sys, os
+os.chdir(os.path.dirname(__file__))
+
+import app
+
+import bottle
+application = bottle.default_app()

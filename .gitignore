@@ -1,0 +1,12 @@
+config.ini
+.project
+.pydevproject
+.settings
+*.pyc
+session
+virtualenv.py
+.idea
+vendor
+adapter.wsgi
+VIRTUALENV
+assets/config.js

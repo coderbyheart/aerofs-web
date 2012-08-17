@@ -1,0 +1,3 @@
+[aerofs]
+sh=<path to aerofs-sh>
+sharedfolder=<name (not path) of shared folder to invite ppl to>
