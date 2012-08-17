@@ -6,7 +6,6 @@ site.addsitedir('/srv/www/<hostname>/')
 import sys, os
 os.chdir(os.path.dirname(__file__))
 
-import app
-
 import bottle
+import app
 application = bottle.default_app()

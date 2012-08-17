@@ -1,8 +1,8 @@
-from bottle import Bottle, run, request, redirect, static_file, HTTPResponse
+from bottle import Bottle, run, request, redirect, static_file, HTTPResponse, route, post
 import json
 import ConfigParser
 import re
-import subprocess
+from subprocess import check_call, Popen
 
 config = ConfigParser.RawConfigParser()
 config.read('config.ini')
@@ -10,13 +10,11 @@ config.read('config.ini')
 AEROFS_SH = config.get("aerofs", "sh")
 AEROFS_SHAREDFOLDER = config.get("aerofs", "sharedfolder")
 
-app = Bottle()
-
-@app.route('/')
+@route('/')
 def index():
     redirect('/app')
     
-@app.post('/api/register')
+@post('/api/register')
 def register():
     data = json.load(request.body)
     if 'email' not in data:
@@ -26,7 +24,7 @@ def register():
         return HTTPResponse(json.dumps({'error': True, 'message': 'Invalid email'}), 400)
     
     try:
-        status = subprocess.check_output([AEROFS_SH, "invite", AEROFS_SHAREDFOLDER, data['email'], "EDITOR"])
+        check_call([AEROFS_SH, "invite", AEROFS_SHAREDFOLDER, data['email'], "EDITOR"])
         return {'error': False, 'message': "OK"}
     except OSError as e:
         return HTTPResponse(json.dumps({'error': True, 'message': 'Failed talk to aerofs-sh in: ' + AEROFS_SH}), 500)
@@ -35,20 +33,19 @@ def register():
 
 # Static files
     
-@app.route('/assets/<filepath:path>')
+@route('/assets/<filepath:path>')
 def get_assets(filepath):
     return static_file(filepath, root='./assets')
 
-@app.route('/vendor/<filepath:path>')
+@route('/vendor/<filepath:path>')
 def get_vendor(filepath):
     return static_file(filepath, root='./vendor')
 
-@app.route('/humans.txt')
+@route('/humans.txt')
 def get_humanstxt():
     return static_file('humans.txt', root='./')
 
-@app.route('/app')
+@route('/app')
 def get_app():
     return static_file('index.html', root='./')
 
-run(app, host='localhost', port=8080)
