@@ -39,7 +39,7 @@ Dies ist eine Beispiel-Konfiguration für einen virtuellen Host:
 	    </Directory>
 	    CustomLog /srv/www/<hostname>/logs/access_log combined
 	    ErrorLog /srv/www/<hostname>/logs/error_log
-	    WSGIDaemonProcess bottle user=<apache user> group=<apache user> processes=1 threads=5
+	    WSGIDaemonProcess aerofsweb user=<apache user> group=<apache user> processes=1 threads=5
 	    WSGIScriptAlias / /srv/www/<hostname>/adapter.wsgi
     </VirtualHost>
 
