@@ -14,7 +14,7 @@ Die Datei `config.ini.dist` nach `config.ini` kopieren und anpassen.
 
 ### Installation der Dependencies
 
-    make install
+    make
 
 ## Dev-Server starten
 
